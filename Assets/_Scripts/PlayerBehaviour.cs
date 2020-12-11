@@ -7,8 +7,7 @@ public class PlayerBehaviour : MonoBehaviour
     public Transform bulletSpawn;
     public GameObject bullet;
     public int fireRate;
-
-
+       
     public BulletManager bulletManager;
 
     void start()
@@ -28,7 +27,10 @@ public class PlayerBehaviour : MonoBehaviour
             // delays firing
             if (Time.frameCount % fireRate == 0)
             {
-                var tempBullet = Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
+                var tempBullet = bulletManager.getNextActiveBullet();
+                tempBullet.transform.position = bulletSpawn.position;
+                tempBullet.transform.rotation = Quaternion.identity;
+                tempBullet.SetActive(true);
                 tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
 
                 tempBullet.transform.SetParent(bulletManager.gameObject.transform);
