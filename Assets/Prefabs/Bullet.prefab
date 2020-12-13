@@ -95,5 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
+  currentSpeed: 0
   direction: {x: 0, y: 0, z: 0}
   range: 20
+  radius: 0
+  restitution: 0.9

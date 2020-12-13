@@ -84,10 +84,48 @@ public class CollisionManager : MonoBehaviour
             // Collision Occurs (Call Collision Response!)
             b.isColliding = true;
             Debug.Log("Collision!");
+            ResponseAABBCircle(a, b);
         }
         else
         {
             b.isColliding = false;
         }
+    }
+
+    // AABBCircle Response to Collision
+    public static void ResponseAABBCircle(BulletBehaviour a, CubeBehaviour b)
+    {
+        Vector3 spherePos = a.transform.position;
+        // Move Ball Out of Cube
+
+        // Check which side the ball collided with the cube, and Reverse direction
+        if (spherePos.x > b.max.x || spherePos.x < b.min.x)
+        {
+            a.direction.x *= -1;
+            if (spherePos.x > b.max.x)
+                a._MoveOut(1);
+            else
+                a._MoveOut(-1);
+        }
+        if (spherePos.y > b.max.y || spherePos.y < b.min.y)
+        {
+            a.direction.y *= -1;
+            if (spherePos.y > b.max.y)
+                a._MoveOut(2);
+            else
+                a._MoveOut(-2);
+        }
+        if (spherePos.z > b.max.z || spherePos.z < b.min.z)
+        {
+            a.direction.z *= -1;
+            if (spherePos.z > b.max.z)
+                a._MoveOut(3);
+            else
+                a._MoveOut(-3);
+        }
+        // Check Final Velocities of Box and Bullet
+
+        // Apply the Restitution Calculation
+        a.currentSpeed *= a.restitution;
     }
 }
