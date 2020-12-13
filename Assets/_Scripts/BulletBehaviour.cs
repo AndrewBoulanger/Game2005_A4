@@ -8,10 +8,12 @@ public class BulletBehaviour : MonoBehaviour
     public float speed;
     public Vector3 direction;
     public float range;
+    public float radius;
 
     // Start is called before the first frame update
     void Start()
     {
+        radius = transform.localScale.x;
     }
 
     // Update is called once per frame
