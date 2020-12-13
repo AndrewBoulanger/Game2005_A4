@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class BulletBehaviour : MonoBehaviour
 {
+    public float mass;
     public float speed;
     public float currentSpeed;
     public Vector3 direction;
@@ -79,6 +80,16 @@ public class BulletBehaviour : MonoBehaviour
         transform.position += moveVec * radius / 2;
     }
 
+    public Vector3 _GetVelocity()
+    {
+        return direction * currentSpeed;
+    }
+
+    public void _SetVelocity(Vector3 vel)
+    {
+        direction = vel.normalized;
+        currentSpeed = vel.magnitude;
+    }
     public void Reset()
     {
         currentSpeed = speed;

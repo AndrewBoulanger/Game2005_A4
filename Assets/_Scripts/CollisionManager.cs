@@ -96,9 +96,9 @@ public class CollisionManager : MonoBehaviour
     public static void ResponseAABBCircle(BulletBehaviour a, CubeBehaviour b)
     {
         Vector3 spherePos = a.transform.position;
-        // Move Ball Out of Cube
-
-        // Check which side the ball collided with the cube, and Reverse direction
+        // Calculate Final Velocities of Box and Bullet
+        CalculateVelocities(a, b);
+        // Check which side the ball collided with the cube, and Reverse direction, and move out of cube
         if (spherePos.x > b.max.x || spherePos.x < b.min.x)
         {
             a.direction.x *= -1;
@@ -127,5 +127,19 @@ public class CollisionManager : MonoBehaviour
 
         // Apply the Restitution Calculation
         a.currentSpeed *= a.restitution;
+    }
+
+    // Only for Bullet and Cube (For Now)
+    public static void CalculateVelocities(BulletBehaviour a, CubeBehaviour b)
+    {
+        // A's Velocity
+        Vector3 vA = ((b.mass - a.mass) / (b.mass + a.mass)) * a._GetVelocity() +
+                     ((2 * b.mass) / (b.mass + a.mass)) * b._GetVelocity();
+        // B's Velocity
+        Vector3 vB = ((b.mass - a.mass) / (b.mass + a.mass)) * b._GetVelocity() +
+                     ((2 * a.mass) / (b.mass + a.mass)) * a._GetVelocity();
+
+        a._SetVelocity(vA);
+        b._SetVelocity(vB);
     }
 }

@@ -41,7 +41,7 @@ public class BulletManager : MonoBehaviour
     public GameObject getNextActiveBullet()
     {
         GameObject nextBullet;
-        if(bulletPool.Peek() != null)
+        if(bulletPool.Count != 0 && bulletPool.Peek() != null)
         {
             nextBullet = bulletPool.Dequeue();
         }
