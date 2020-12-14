@@ -8,12 +8,16 @@ public class CollisionManager : MonoBehaviour
     public CubeBehaviour[] actors;
     public BulletManager bManager;
     private Queue<GameObject> activeBullets;
+    [Range(0.0f, 1.0f)]
+    public float restitution;
+    public void setRestitution(float val) { restitution = val; }
 
     // Start is called before the first frame update
     void Start()
     {
         actors = FindObjectsOfType<CubeBehaviour>();
         bManager = FindObjectOfType<BulletManager>();
+        
     }
 
     // Update is called once per frame
@@ -88,6 +92,7 @@ public class CollisionManager : MonoBehaviour
         }
         else
         {
+            a.isGrounded = false;
             b.isColliding = false;
         }
     }
@@ -111,7 +116,10 @@ public class CollisionManager : MonoBehaviour
         {
             a.direction.y *= -1;
             if (spherePos.y > b.max.y)
+            {
                 a._MoveOut(2);
+                a.isGrounded = true;
+            }
             else
                 a._MoveOut(-2);
         }
@@ -126,7 +134,7 @@ public class CollisionManager : MonoBehaviour
         // Check Final Velocities of Box and Bullet
 
         // Apply the Restitution Calculation
-        a.currentSpeed *= a.restitution;
+        a.currentSpeed *=  FindObjectOfType<CollisionManager>().restitution;
     }
 
     // Only for Bullet and Cube (For Now)

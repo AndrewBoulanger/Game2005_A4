@@ -8,6 +8,7 @@ public class BulletManager : MonoBehaviour
     public Queue<GameObject> bulletPool;
     public Queue<GameObject> activeBullets;
     public GameObject BulletTemplate;
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -51,10 +52,11 @@ public class BulletManager : MonoBehaviour
         }
 
         nextBullet.GetComponent<BulletBehaviour>().Reset();
+ 
         activeBullets.Enqueue(nextBullet);
         return nextBullet;
     }
     
  
-
+ 
 }

@@ -9,10 +9,17 @@ public class BulletBehaviour : MonoBehaviour
     public float speed;
     public float currentSpeed;
     public Vector3 direction;
+    public Vector3 gravity;
+    public bool isGrounded;
     public float range;
     public float radius;
     [Range(0.0f, 1.0f)]
-    public float restitution;
+    public float restitution; 
+    public void setRestitution(float val)
+    {
+        restitution = val;
+    }
+        
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +33,14 @@ public class BulletBehaviour : MonoBehaviour
     {
         _Move();
         _CheckBounds();
+        _CheckSpeed();
     }
 
     private void _Move()
     {
-        transform.position += direction * speed * Time.deltaTime;
+        _SetVelocity(direction * currentSpeed - gravity * Time.deltaTime);
+        
+        transform.position += direction * currentSpeed * Time.deltaTime;
     }
 
     private void _CheckBounds()
@@ -44,7 +54,7 @@ public class BulletBehaviour : MonoBehaviour
     // Despawn bullet if moving too slowly
     public void _CheckSpeed()
     {
-        if(currentSpeed <= 0.1f)
+        if(currentSpeed <= gravity.y * Time.deltaTime)
         {
             gameObject.SetActive(false);
             Reset();
