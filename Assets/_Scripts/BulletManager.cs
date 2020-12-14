@@ -8,13 +8,15 @@ public class BulletManager : MonoBehaviour
     public Queue<GameObject> bulletPool;
     public Queue<GameObject> activeBullets;
     public GameObject BulletTemplate;
+    public float startingSpeed { get; set; }
+  
     // Start is called before the first frame update
     void Start()
     {
         bulletPool = new Queue<GameObject>();
         activeBullets = new Queue<GameObject>();
         PopulateBulletPool();
-
+        startingSpeed = 4;
     }
 
     // Update is called once per frame
@@ -51,10 +53,12 @@ public class BulletManager : MonoBehaviour
         }
 
         nextBullet.GetComponent<BulletBehaviour>().Reset();
+        nextBullet.GetComponent<BulletBehaviour>().speed = startingSpeed;
+
         activeBullets.Enqueue(nextBullet);
         return nextBullet;
     }
     
  
-
+ 
 }

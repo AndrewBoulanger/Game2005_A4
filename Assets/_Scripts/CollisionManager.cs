@@ -8,12 +8,21 @@ public class CollisionManager : MonoBehaviour
     public CubeBehaviour[] actors;
     public BulletManager bManager;
     private Queue<GameObject> activeBullets;
+    [Range(0.0f, 1.0f)]
+    public float restitution;
+    public void setRestitution(float val) { restitution = val; }
+    public float bulletMass { get; set; }
+    public float SquareMass { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
         actors = FindObjectsOfType<CubeBehaviour>();
         bManager = FindObjectOfType<BulletManager>();
+
+        bulletMass = 1;
+        SquareMass = 5;
+        
     }
 
     // Update is called once per frame
@@ -126,18 +135,26 @@ public class CollisionManager : MonoBehaviour
         // Check Final Velocities of Box and Bullet
 
         // Apply the Restitution Calculation
-        a.currentSpeed *= a.restitution;
+        a.currentSpeed *=  FindObjectOfType<CollisionManager>().restitution;
     }
 
     // Only for Bullet and Cube (For Now)
     public static void CalculateVelocities(BulletBehaviour a, CubeBehaviour b)
     {
+        float M1 = FindObjectOfType<CollisionManager>().bulletMass;
+        float M2 = 200000.0f;
+        if (b.moveable)
+        {
+             M2 = FindObjectOfType<CollisionManager>().SquareMass;
+        }
+       
+
         // A's Velocity
-        Vector3 vA = ((b.mass - a.mass) / (b.mass + a.mass)) * a._GetVelocity() +
-                     ((2 * b.mass) / (b.mass + a.mass)) * b._GetVelocity();
+        Vector3 vA = ((M2 - M1) / (M2 + M1)) * a._GetVelocity() +
+                     ((2 * M2) / (M2 + M1)) * b._GetVelocity();
         // B's Velocity
-        Vector3 vB = ((b.mass - a.mass) / (b.mass + a.mass)) * b._GetVelocity() +
-                     ((2 * a.mass) / (b.mass + a.mass)) * a._GetVelocity();
+        Vector3 vB = ((M2 - M1) / (M2 + M1)) * b._GetVelocity() +
+                     ((2 * M1) / (M2 + M1)) * a._GetVelocity();
 
         a._SetVelocity(vA);
         b._SetVelocity(vB);
