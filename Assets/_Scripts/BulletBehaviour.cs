@@ -37,6 +37,7 @@ public class BulletBehaviour : MonoBehaviour
 
     private void _Move()
     {
+        gravity = FindObjectOfType<CollisionManager>().gravity;
         _SetVelocity(direction * currentSpeed - gravity * Time.deltaTime);
         
         transform.position += direction * currentSpeed * Time.deltaTime;

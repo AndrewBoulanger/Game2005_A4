@@ -14,6 +14,9 @@ public class CollisionManager : MonoBehaviour
     public float bulletMass { get; set; }
     public float SquareMass { get; set; }
 
+    public Vector3 gravity;
+    public void setGravity(float val) { gravity.y = val; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +25,7 @@ public class CollisionManager : MonoBehaviour
 
         bulletMass = 1;
         SquareMass = 5;
-        
+        gravity = new Vector3(0.0f, 9.8f, 0.0f);
     }
 
     // Update is called once per frame

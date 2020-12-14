@@ -23,6 +23,7 @@ public class CubeBehaviour : MonoBehaviour
     public Vector3 direction;
     public float mass;
     public bool moveable;
+    public Vector3 gravity;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +43,7 @@ public class CubeBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        gravity = FindObjectOfType<CollisionManager>().gravity;
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
 
