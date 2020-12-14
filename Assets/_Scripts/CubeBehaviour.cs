@@ -17,6 +17,13 @@ public class CubeBehaviour : MonoBehaviour
     private MeshFilter meshFilter;
     private Bounds bounds;
 
+    // Movement
+    public float speed;
+    public float currentSpeed;
+    public Vector3 direction;
+    public float mass;
+    public bool moveable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +33,10 @@ public class CubeBehaviour : MonoBehaviour
         bounds = meshFilter.mesh.bounds;
         size = bounds.size;
 
+        speed = 0.0f;
+        currentSpeed = speed;
+        if (!moveable)
+            mass = 20000.0f;
     }
 
     // Update is called once per frame
@@ -33,6 +44,11 @@ public class CubeBehaviour : MonoBehaviour
     {
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
+
+        if (moveable)
+        {
+            _Move();
+        }
     }
 
     void FixedUpdate()
@@ -48,5 +64,21 @@ public class CubeBehaviour : MonoBehaviour
 
             Gizmos.DrawWireCube(transform.position, Vector3.Scale(new Vector3(1.0f, 1.0f, 1.0f), transform.localScale));
         }
+    }
+
+    private void _Move()
+    {
+        transform.position += direction * currentSpeed * Time.deltaTime;
+    }
+
+    public Vector3 _GetVelocity()
+    {
+        return direction * currentSpeed;
+    }
+
+    public void _SetVelocity(Vector3 vel)
+    {
+        direction = vel.normalized;
+        currentSpeed = vel.magnitude;
     }
 }

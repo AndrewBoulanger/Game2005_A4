@@ -5,16 +5,18 @@ using UnityEngine;
 public class BulletManager : MonoBehaviour
 {
     public int maxBullets = 30;
-    Queue<GameObject> bulletPool;
-    Queue<GameObject> activeBullets;
+    public Queue<GameObject> bulletPool;
+    public Queue<GameObject> activeBullets;
     public GameObject BulletTemplate;
+    public float startingSpeed { get; set; }
+  
     // Start is called before the first frame update
     void Start()
     {
         bulletPool = new Queue<GameObject>();
         activeBullets = new Queue<GameObject>();
         PopulateBulletPool();
-
+        startingSpeed = 4;
     }
 
     // Update is called once per frame
@@ -41,7 +43,7 @@ public class BulletManager : MonoBehaviour
     public GameObject getNextActiveBullet()
     {
         GameObject nextBullet;
-        if(bulletPool.Peek() != null)
+        if(bulletPool.Count != 0 && bulletPool.Peek() != null)
         {
             nextBullet = bulletPool.Dequeue();
         }
@@ -51,10 +53,12 @@ public class BulletManager : MonoBehaviour
         }
 
         nextBullet.GetComponent<BulletBehaviour>().Reset();
+        nextBullet.GetComponent<BulletBehaviour>().speed = startingSpeed;
+
         activeBullets.Enqueue(nextBullet);
         return nextBullet;
     }
     
  
-
+ 
 }
