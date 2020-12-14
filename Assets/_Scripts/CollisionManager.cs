@@ -11,12 +11,17 @@ public class CollisionManager : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float restitution;
     public void setRestitution(float val) { restitution = val; }
+    public float bulletMass { get; set; }
+    public float SquareMass { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
         actors = FindObjectsOfType<CubeBehaviour>();
         bManager = FindObjectOfType<BulletManager>();
+
+        bulletMass = 1;
+        SquareMass = 5;
         
     }
 
@@ -92,7 +97,6 @@ public class CollisionManager : MonoBehaviour
         }
         else
         {
-            a.isGrounded = false;
             b.isColliding = false;
         }
     }
@@ -116,10 +120,7 @@ public class CollisionManager : MonoBehaviour
         {
             a.direction.y *= -1;
             if (spherePos.y > b.max.y)
-            {
                 a._MoveOut(2);
-                a.isGrounded = true;
-            }
             else
                 a._MoveOut(-2);
         }
@@ -140,12 +141,20 @@ public class CollisionManager : MonoBehaviour
     // Only for Bullet and Cube (For Now)
     public static void CalculateVelocities(BulletBehaviour a, CubeBehaviour b)
     {
+        float M1 = FindObjectOfType<CollisionManager>().bulletMass;
+        float M2 = 200000.0f;
+        if (b.moveable)
+        {
+             M2 = FindObjectOfType<CollisionManager>().SquareMass;
+        }
+       
+
         // A's Velocity
-        Vector3 vA = ((b.mass - a.mass) / (b.mass + a.mass)) * a._GetVelocity() +
-                     ((2 * b.mass) / (b.mass + a.mass)) * b._GetVelocity();
+        Vector3 vA = ((M2 - M1) / (M2 + M1)) * a._GetVelocity() +
+                     ((2 * M2) / (M2 + M1)) * b._GetVelocity();
         // B's Velocity
-        Vector3 vB = ((b.mass - a.mass) / (b.mass + a.mass)) * b._GetVelocity() +
-                     ((2 * a.mass) / (b.mass + a.mass)) * a._GetVelocity();
+        Vector3 vB = ((M2 - M1) / (M2 + M1)) * b._GetVelocity() +
+                     ((2 * M1) / (M2 + M1)) * a._GetVelocity();
 
         a._SetVelocity(vA);
         b._SetVelocity(vB);

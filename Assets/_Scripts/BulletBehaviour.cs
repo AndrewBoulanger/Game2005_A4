@@ -10,7 +10,6 @@ public class BulletBehaviour : MonoBehaviour
     public float currentSpeed;
     public Vector3 direction;
     public Vector3 gravity;
-    public bool isGrounded;
     public float range;
     public float radius;
     [Range(0.0f, 1.0f)]
