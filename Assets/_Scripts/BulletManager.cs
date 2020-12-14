@@ -5,8 +5,8 @@ using UnityEngine;
 public class BulletManager : MonoBehaviour
 {
     public int maxBullets = 30;
-    Queue<GameObject> bulletPool;
-    Queue<GameObject> activeBullets;
+    public Queue<GameObject> bulletPool;
+    public Queue<GameObject> activeBullets;
     public GameObject BulletTemplate;
     // Start is called before the first frame update
     void Start()
@@ -41,7 +41,7 @@ public class BulletManager : MonoBehaviour
     public GameObject getNextActiveBullet()
     {
         GameObject nextBullet;
-        if(bulletPool.Peek() != null)
+        if(bulletPool.Count != 0 && bulletPool.Peek() != null)
         {
             nextBullet = bulletPool.Dequeue();
         }

@@ -94,6 +94,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb26199208f309242b07df29a9ab821e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mass: 1
   speed: 4
+  currentSpeed: 0
   direction: {x: 0, y: 0, z: 0}
   range: 20
+  radius: 0
+  restitution: 0.9
