@@ -22,4 +22,9 @@ public class MySceneManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
