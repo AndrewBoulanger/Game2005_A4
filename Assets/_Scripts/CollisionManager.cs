@@ -16,6 +16,8 @@ public class CollisionManager : MonoBehaviour
     // public float SquareMass { get; set; }
     public Vector3 gravity;
     public void setGravity(float val) { gravity.y = val; }
+
+    public static float friction { get; set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class CollisionManager : MonoBehaviour
 
         bulletMass = 1;
         SquareMass = 5;
+        friction = 0.6f;
         
     }
 
@@ -217,7 +220,7 @@ public class CollisionManager : MonoBehaviour
         a.velocity = a.velocity + normal * Vector3.Dot(a.velocity, normal) * -(1 - a.restitution) / ((1 / a.mass) + (1 / b.mass)) * Time.deltaTime;
         // Friction
         Vector3 tangent = Vector3.Cross(normal, Vector3.Cross(a.velocity, normal)).normalized;
-        a.velocity = a.velocity + tangent * Vector3.Dot(a.velocity, tangent) * -(a.friction) / ((1 / a.mass) + (1 / b.mass)) * Time.deltaTime;
+        a.velocity = a.velocity + tangent * Vector3.Dot(a.velocity, tangent) * -friction / ((1 / a.mass) + (1 / b.mass)) * Time.deltaTime;
     }
 
     // Only for Bullet and Cube (For Now)
