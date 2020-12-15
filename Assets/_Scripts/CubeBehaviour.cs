@@ -21,12 +21,20 @@ public class CubeBehaviour : MonoBehaviour
     public float speed;
     public float currentSpeed;
     public Vector3 direction;
+    public Vector3 velocity;
+    public Vector3 gravity;
     public float mass;
     public bool moveable;
+    [Range(0.0f, 1.0f)]
+    public float restitution;
+    public float friction;
+
+    public bool active;
 
     // Start is called before the first frame update
     void Start()
     {
+        active = false;
         debug = false;
         meshFilter = GetComponent<MeshFilter>();
 
@@ -44,16 +52,15 @@ public class CubeBehaviour : MonoBehaviour
     {
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
-
-        if (moveable)
-        {
-            _Move();
-        }
     }
 
     void FixedUpdate()
     {
         // physics related calculations
+        if (moveable && active)
+        {
+            _Move();
+        }
     }
 
     private void OnDrawGizmos()
@@ -68,17 +75,45 @@ public class CubeBehaviour : MonoBehaviour
 
     private void _Move()
     {
-        transform.position += direction * currentSpeed * Time.deltaTime;
+        _SetVelocity(velocity - gravity * Time.deltaTime);
+
+        transform.position += velocity * Time.deltaTime;
     }
 
     public Vector3 _GetVelocity()
     {
-        return direction * currentSpeed;
+        if (moveable && active)
+            return velocity;
+        return new Vector3(0.0f, 0.0f, 0.0f);
     }
 
     public void _SetVelocity(Vector3 vel)
+    { 
+        if(moveable)
+        {
+            direction = vel.normalized;
+            currentSpeed = vel.magnitude;
+            velocity = vel;
+        }
+    }
+
+    public void _MoveOut(Vector3 normal, float dist)
     {
-        direction = vel.normalized;
-        currentSpeed = vel.magnitude;
+        transform.position += normal * dist;
+    }
+
+    public float _GetHalfWidth()
+    {
+        return (max.x - min.x) / 2;
+    }
+
+    public float _GetHalfHeight()
+    {
+        return (max.y - min.y) / 2;
+    }
+
+    public float _GetHalfLength()
+    {
+        return (max.z - min.z) / 2;
     }
 }
