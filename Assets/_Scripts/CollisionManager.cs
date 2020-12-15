@@ -24,6 +24,8 @@ public class CollisionManager : MonoBehaviour
         actors = FindObjectsOfType<CubeBehaviour>();
         bManager = FindObjectOfType<BulletManager>();
 
+        restitution = 0.97f;
+        gravity.y = 1.8f;
         bulletMass = 1;
         SquareMass = 5;
         friction = 0.6f;
