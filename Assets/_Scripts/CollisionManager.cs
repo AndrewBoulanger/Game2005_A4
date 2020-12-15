@@ -9,10 +9,10 @@ public class CollisionManager : MonoBehaviour
     public BulletManager bManager;
     private Queue<GameObject> activeBullets;
     [Range(0.0f, 1.0f)]
-    public float restitution;
-    public void setRestitution(float val) { restitution = val; }
-    public float bulletMass { get; set; }
-    public float SquareMass { get; set; }
+    public static float restitution;
+    public static void setRestitution(float val) { restitution = val; }
+    public static float bulletMass { get; set; }
+    public static float SquareMass { get; set; }
     // public float SquareMass { get; set; }
     public Vector3 gravity;
     public void setGravity(float val) { gravity.y = val; }
@@ -100,7 +100,7 @@ public class CollisionManager : MonoBehaviour
             // Collision Occurs (Call Collision Response!)
             b.isColliding = true;
             b.active = true;
-            Debug.Log("Collision!");
+           
             ResponseAABBCircle(a, b);
         }
         else
@@ -143,7 +143,7 @@ public class CollisionManager : MonoBehaviour
         // Check Final Velocities of Box and Bullet
 
         // Apply the Restitution Calculation
-        a._SetVelocity(a.velocity* FindObjectOfType<CollisionManager>().restitution);
+        a._SetVelocity(a.velocity* restitution);
 
     }
 
@@ -217,7 +217,7 @@ public class CollisionManager : MonoBehaviour
         a._MoveOut(normal, dist);
 
         // Calculating bounciness of collision
-        a.velocity = a.velocity + normal * Vector3.Dot(a.velocity, normal) * -(1 - a.restitution) / ((1 / a.mass) + (1 / b.mass)) * Time.deltaTime;
+        a.velocity = a.velocity + normal * Vector3.Dot(a.velocity, normal) * -(1 - restitution) / ((1 / a.mass) + (1 / b.mass)) * Time.deltaTime;
         // Friction
         Vector3 tangent = Vector3.Cross(normal, Vector3.Cross(a.velocity, normal)).normalized;
         a.velocity = a.velocity + tangent * Vector3.Dot(a.velocity, tangent) * -friction / ((1 / a.mass) + (1 / b.mass)) * Time.deltaTime;
@@ -226,8 +226,8 @@ public class CollisionManager : MonoBehaviour
     // Only for Bullet and Cube (For Now)
     public static void CalculateVelocities(BulletBehaviour a, CubeBehaviour b)
     {
-        float ballMass = FindObjectOfType<CollisionManager>().bulletMass;
-        float cubeMass = b.moveable ? FindObjectOfType<CollisionManager>().SquareMass : 200000.0f;
+        float ballMass = bulletMass;
+        float cubeMass = b.moveable ? SquareMass : 200000.0f;
 
         // A's Velocity
         Vector3 vA = ((b.mass - ballMass) / (b.mass + ballMass)) * a._GetVelocity() +
@@ -244,11 +244,11 @@ public class CollisionManager : MonoBehaviour
     {
         if(a.moveable)
         {
-            a.mass = FindObjectOfType<CollisionManager>().SquareMass;
+            a.mass = SquareMass;
         }
         if(b.moveable)
         {
-            b.mass = FindObjectOfType<CollisionManager>().SquareMass;
+            b.mass = SquareMass;
         }
         // A's Velocity
         Vector3 vA = ((b.mass - a.mass) / (b.mass + a.mass)) * a._GetVelocity() +
