@@ -32,6 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
                 tempBullet.transform.rotation = Quaternion.identity;
                 tempBullet.SetActive(true);
                 tempBullet.GetComponent<BulletBehaviour>().direction = bulletSpawn.forward;
+                tempBullet.GetComponent<BulletBehaviour>().Reset();
 
                 tempBullet.transform.SetParent(bulletManager.gameObject.transform);
             }

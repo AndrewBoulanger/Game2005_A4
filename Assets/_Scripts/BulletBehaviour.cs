@@ -9,6 +9,7 @@ public class BulletBehaviour : MonoBehaviour
     public float speed;
     public float currentSpeed;
     public Vector3 direction;
+    public Vector3 velocity;
     public Vector3 gravity;
     public float range;
     public float radius;
@@ -25,6 +26,7 @@ public class BulletBehaviour : MonoBehaviour
     {
         radius = transform.localScale.x;
         currentSpeed = speed;
+        velocity = direction * currentSpeed;
     }
 
     // Update is called once per frame
@@ -37,10 +39,9 @@ public class BulletBehaviour : MonoBehaviour
 
     private void _Move()
     {
-        gravity = FindObjectOfType<CollisionManager>().gravity;
-        _SetVelocity(direction * currentSpeed - gravity * Time.deltaTime);
-        
-        transform.position += direction * currentSpeed * Time.deltaTime;
+        _SetVelocity(velocity - gravity * Time.deltaTime);
+
+        transform.position += velocity * Time.deltaTime;
     }
 
     private void _CheckBounds()
@@ -92,16 +93,18 @@ public class BulletBehaviour : MonoBehaviour
 
     public Vector3 _GetVelocity()
     {
-        return direction * currentSpeed;
+        return velocity;
     }
 
     public void _SetVelocity(Vector3 vel)
     {
         direction = vel.normalized;
         currentSpeed = vel.magnitude;
+        velocity = vel;
     }
     public void Reset()
     {
         currentSpeed = speed;
+        velocity = direction * speed;
     }
 }
