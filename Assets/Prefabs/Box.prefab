@@ -97,13 +97,16 @@ MonoBehaviour:
   size: {x: 0, y: 0, z: 0}
   max: {x: 0, y: 0, z: 0}
   min: {x: 0, y: 0, z: 0}
-  acceleration: {x: 0, y: 0, z: 0}
   isColliding: 0
-  isGrounded: 0
   debug: 0
   contacts: []
   speed: 0
   currentSpeed: 0
   direction: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 1.8, z: 0}
   mass: 5
   moveable: 1
+  restitution: 0
+  friction: 0
+  active: 0
