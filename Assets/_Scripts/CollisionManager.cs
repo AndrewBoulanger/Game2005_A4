@@ -12,16 +12,18 @@ public class CollisionManager : MonoBehaviour
     public float restitution;
     public void setRestitution(float val) { restitution = val; }
     public float bulletMass { get; set; }
+    public float SquareMass { get; set; }
     // public float SquareMass { get; set; }
-
+    public Vector3 gravity;
+    public void setGravity(float val) { gravity.y = val; }
     // Start is called before the first frame update
     void Start()
     {
         actors = FindObjectsOfType<CubeBehaviour>();
         bManager = FindObjectOfType<BulletManager>();
 
-        bulletMass = 4;
-        // SquareMass = 5;
+        bulletMass = 1;
+        SquareMass = 5;
         
     }
 
@@ -138,7 +140,8 @@ public class CollisionManager : MonoBehaviour
         // Check Final Velocities of Box and Bullet
 
         // Apply the Restitution Calculation
-        a.currentSpeed *= FindObjectOfType<CollisionManager>().restitution;
+        a._SetVelocity(a.velocity* FindObjectOfType<CollisionManager>().restitution);
+
     }
 
     // AABB Response to Collision
@@ -221,6 +224,7 @@ public class CollisionManager : MonoBehaviour
     public static void CalculateVelocities(BulletBehaviour a, CubeBehaviour b)
     {
         float ballMass = FindObjectOfType<CollisionManager>().bulletMass;
+        float cubeMass = b.moveable ? FindObjectOfType<CollisionManager>().SquareMass : 200000.0f;
 
         // A's Velocity
         Vector3 vA = ((b.mass - ballMass) / (b.mass + ballMass)) * a._GetVelocity() +
@@ -235,6 +239,14 @@ public class CollisionManager : MonoBehaviour
 
     public static void CalculateVelocities(CubeBehaviour a, CubeBehaviour b)
     {
+        if(a.moveable)
+        {
+            a.mass = FindObjectOfType<CollisionManager>().SquareMass;
+        }
+        if(b.moveable)
+        {
+            b.mass = FindObjectOfType<CollisionManager>().SquareMass;
+        }
         // A's Velocity
         Vector3 vA = ((b.mass - a.mass) / (b.mass + a.mass)) * a._GetVelocity() +
                      ((2 * b.mass) / (b.mass + a.mass)) * b._GetVelocity();

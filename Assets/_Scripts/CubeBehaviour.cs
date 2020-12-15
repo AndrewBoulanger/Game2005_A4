@@ -75,6 +75,7 @@ public class CubeBehaviour : MonoBehaviour
 
     private void _Move()
     {
+        gravity = FindObjectOfType<CollisionManager>().gravity;
         _SetVelocity(velocity - gravity * Time.deltaTime);
 
         transform.position += velocity * Time.deltaTime;

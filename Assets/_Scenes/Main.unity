@@ -235,16 +235,18 @@ MonoBehaviour:
   max: {x: 0, y: 0, z: 0}
   min: {x: 0, y: 0, z: 0}
   isColliding: 0
-  isGrounded: 0
   debug: 0
-  width: 0
   contacts: []
   speed: 0
   currentSpeed: 0
   direction: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
   mass: 0
   moveable: 0
-  gravity: {x: 0, y: 0, z: 0}
+  restitution: 0
+  friction: 0
+  active: 0
 --- !u!1 &54575907
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,16 +513,18 @@ MonoBehaviour:
   max: {x: 0, y: 0, z: 0}
   min: {x: 0, y: 0, z: 0}
   isColliding: 0
-  isGrounded: 0
   debug: 0
-  width: 0
   contacts: []
   speed: 0
   currentSpeed: 0
   direction: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
   mass: 0
   moveable: 0
-  gravity: {x: 0, y: 0, z: 0}
+  restitution: 0
+  friction: 0
+  active: 0
 --- !u!1 &149300459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,9 +1127,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1215199438}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 20
+  m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 9.8
+  m_Value: 1.8
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1252,16 +1256,18 @@ MonoBehaviour:
   max: {x: 0, y: 0, z: 0}
   min: {x: 0, y: 0, z: 0}
   isColliding: 0
-  isGrounded: 0
   debug: 0
-  width: 0
   contacts: []
   speed: 0
   currentSpeed: 0
   direction: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
   mass: 0
   moveable: 0
-  gravity: {x: 0, y: 0, z: 0}
+  restitution: 0
+  friction: 0
+  active: 0
 --- !u!23 &526557354
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3657,7 +3663,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 20.0
+  m_Text: 10.0
 --- !u!222 &1485088976
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3990,7 +3996,7 @@ MonoBehaviour:
   actors: []
   bManager: {fileID: 403008322}
   restitution: 0.97
-  gravity: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 1.8, z: 0}
 --- !u!4 &1957707762
 Transform:
   m_ObjectHideFlags: 0
@@ -4332,16 +4338,18 @@ MonoBehaviour:
   max: {x: 0, y: 0, z: 0}
   min: {x: 0, y: 0, z: 0}
   isColliding: 0
-  isGrounded: 0
   debug: 0
-  width: 0
   contacts: []
   speed: 0
   currentSpeed: 0
   direction: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
   mass: 0
   moveable: 0
-  gravity: {x: 0, y: 0, z: 0}
+  restitution: 0
+  friction: 0
+  active: 0
 --- !u!1 &2031951850
 GameObject:
   m_ObjectHideFlags: 0
@@ -4558,16 +4566,18 @@ MonoBehaviour:
   max: {x: 0, y: 0, z: 0}
   min: {x: 0, y: 0, z: 0}
   isColliding: 0
-  isGrounded: 0
   debug: 0
-  width: 0
   contacts: []
   speed: 0
   currentSpeed: 0
   direction: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: 0, z: 0}
   mass: 0
   moveable: 0
-  gravity: {x: 0, y: 0, z: 0}
+  restitution: 0
+  friction: 0
+  active: 0
 --- !u!1 &2070771491
 GameObject:
   m_ObjectHideFlags: 0
